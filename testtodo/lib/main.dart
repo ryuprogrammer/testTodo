@@ -69,9 +69,30 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: ((context) {
+              return SimpleDialog(
+                title: const Text('新規作成'),
+                contentPadding: const EdgeInsets.all(10),
+                children: [
+                  TextFormField(
+                    onFieldSubmitted: (value) async {
+                      // ここでSupabaseにデータ追加
+                    },
+                  ),
+                ],
+              );
+            }),
+          );
+        },
+        child: Center(
+          child: Text(
+            '新規作成',
+            style: TextStyle(fontSize: 16),
+          ),
+        ),
       ),
     );
   }
