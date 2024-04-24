@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/all.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
@@ -10,7 +11,7 @@ void main() async {
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxsZWVvZ2FubHZycm5oaGptamdsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTM4OTIzMzUsImV4cCI6MjAyOTQ2ODMzNX0.dVMFBgpLJ7YNgrMZEOqaGu06vOOpfYR-OEcpWdlbFr8',
   );
 
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
