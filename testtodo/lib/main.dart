@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/all.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
@@ -13,6 +13,11 @@ void main() async {
 
   runApp(const ProviderScope(child: MyApp()));
 }
+
+// プロバイダー: riverpod
+final todoProvider = Provider((ref) {
+  return Supabase.instance.client;
+});
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
