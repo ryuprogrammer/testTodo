@@ -39,13 +39,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+  final _todoStream =
+      Supabase.instance.client.from('todos').stream(primaryKey: ['id']);
 
   @override
   Widget build(BuildContext context) {
@@ -54,19 +49,23 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
+      body: StreamBuilder<List<Map<String, dynamic>>>(
+        stream: _todoStream,
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          final todos = snapshot.data!;
+
+          return ListView.builder(
+            itemCount: todos.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text(todos[index]['todo_item']),
+              );
+            },
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -80,6 +79,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   TextFormField(
                     onFieldSubmitted: (value) async {
                       // ここでSupabaseにデータ追加
+                      await Supabase.instance.client
+                          .from('todos')
+                          .insert({'todo_item': value});
                     },
                   ),
                 ],
@@ -87,11 +89,9 @@ class _MyHomePageState extends State<MyHomePage> {
             }),
           );
         },
-        child: Center(
-          child: Text(
-            '新規作成',
-            style: TextStyle(fontSize: 16),
-          ),
+        child: Text(
+          '新規作成',
+          style: TextStyle(fontSize: 16),
         ),
       ),
     );
