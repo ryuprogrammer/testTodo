@@ -14,11 +14,6 @@ void main() async {
   runApp(const ProviderScope(child: MyApp()));
 }
 
-// プロバイダー: riverpod
-final todoProvider = Provider((ref) {
-  return Supabase.instance.client;
-});
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
