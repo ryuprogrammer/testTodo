@@ -1,10 +1,12 @@
 import 'dart:async';
-
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // AsyncNotifierを使用するためにAsyncNotifierProviderを定義
 final todoController =
     AsyncNotifierProvider<TodoController, void>(TodoController.new);
+
+final todoStream = Supabase.instance.client;
 
 // Supabaseを操作するAsyncNotifier
 class TodoController extends AsyncNotifier<void> {
