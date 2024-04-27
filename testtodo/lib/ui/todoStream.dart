@@ -36,7 +36,7 @@ class TodoStream extends ConsumerWidget {
             context: context,
             builder: ((context) {
               return SimpleDialog(
-                title: const Text('新規作成'),
+                title: const Text('新規作成プラス'),
                 contentPadding: const EdgeInsets.all(10),
                 children: [
                   TextFormField(
